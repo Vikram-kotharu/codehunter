@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-const Blog = () => {
-  const [blog,getblogs] = useState([])
+const Blog = (props) => {
+  const [blog,getblogs] = useState(props.data)
+  
 
-  const gets = async() =>{
-    let response = await fetch('http://localhost:3000/api/blogs')
-    let data = await response.json()
-    getblogs(data)
-    console.log(data)
+   //const gets = async() =>{
+    //let response = await fetch('http://localhost:3000/api/blogs')
+    //let data = await response.json()
+    //getblogs(data)
+    //console.log(data)
     
-  }
+  //}
 
-  useEffect(()=>{gets()},[])
+   //useEffect(()=>{gets()},[])
+   
   
 
   return (
@@ -40,5 +42,16 @@ const Blog = () => {
     </>
   );
 };
+
+
+
+export async function getServerSideProps(context){
+  let response = await fetch('http://localhost:3000/api/blogs')
+  let data = await response.json()
+  return{
+    props:{data}
+
+  }
+}
 
 export default Blog;
